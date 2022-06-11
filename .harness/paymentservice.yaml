@@ -47,3 +47,4 @@ pipeline:
                                         HARNESS_PARAMETERS_ENABLED: "FALSE"
                                         HARNESS_ARTIFACT_SOURCE_ENABLED: "FALSE"
                                     imagePullPolicy: Always
+                                description: e
