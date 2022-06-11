@@ -23,7 +23,7 @@ pipeline:
                       type: KubernetesDirect
                       spec:
                           connectorRef: account.bootcampgkecluster
-                          namespace: payment-service-build
+                          namespace: payment-service-test
                           automountServiceAccountToken: true
                           nodeSelector: {}
                   execution:
