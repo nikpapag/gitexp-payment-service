@@ -1,0 +1,49 @@
+pipeline:
+    name: payment-service
+    identifier: paymentservice
+    projectIdentifier: gitexp
+    orgIdentifier: default
+    storeType: REMOTE
+    remoteType: create
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: account.workshopgithub
+                repoName: harness-cie-lab
+                build: <+input>
+    stages:
+        - stage:
+              name: BuildAndDeploy
+              identifier: BuildAndDeploy
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.bootcampgkecluster
+                          namespace: payment-service-build
+                          automountServiceAccountToken: true
+                          nodeSelector: {}
+                  execution:
+                      steps:
+                          - step:
+                                type: Plugin
+                                name: harness-deploy-cg
+                                identifier: harnessdeploycg
+                                spec:
+                                    connectorRef: account.bootcampdockerhub
+                                    image: nikpap/harness-ci-cdcg-plugin:latest
+                                    privileged: true
+                                    settings:
+                                        HARNESS_ACCOUNT_ID: IFG41DWvSnaRLOVNB2uesg
+                                        HARNESS_APPLICATION_ID: IGiTgRvyRzuSSMNz9yKNoA
+                                        HARNESS_API_KEY: SUZHNDFEV3ZTbmFSTE9WTkIydWVzZzo6TXA0ODVWbWhDcFRrV0tpNlJ5RURaRHBBdktkVGtWVmFWc0hwUHZ6ajlzODM2ZklpSjZVZmh5a2V0azAxTDBEd1YzZ1ozZVlSOVEyYnpYa0Q=
+                                        HARNESS_WEBHOOK_ID: LeiS8rekXVXMCuNkllTC8yUudk6M1Wdg1t5f4j69
+                                        HARNESS_BUILD_NUMBER: latest
+                                        HARNESS_SERVICE: order-service
+                                        HARNESS_SERVICE_SOURCENAME: harness_todolist-sample
+                                        HARNESS_PARAMETERS_ENABLED: "FALSE"
+                                        HARNESS_ARTIFACT_SOURCE_ENABLED: "FALSE"
+                                    imagePullPolicy: Always
